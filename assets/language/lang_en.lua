@@ -39,7 +39,6 @@ local L={
     keysetHint_sys_back="Menu: Back",
 
     sureText={
-        game_int="Press again to abandon current game",
         quit="Press again to quit",
         keyset_reset="Press again to reset keybinds",
     },

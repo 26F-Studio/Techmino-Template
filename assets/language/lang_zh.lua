@@ -39,7 +39,6 @@ local L={
     keysetHint_sys_back="菜单：返回",
 
     sureText={
-        game_int="再按一次结束当前游戏",
         quit="再按一次退出",
         keyset_reset="再按一次重置键位",
     },
