@@ -42,15 +42,15 @@ end
 
 local f=false
 local buttons={
-    {x=-2.25,y=-3,cat='sys', act='restart',  onPress=function() restart() end},
-    {x=-2.25,y=-2,cat='sys', act='back',     onPress=function() end},
+    {x=-2.25,y=0,cat='sys', act='restart',  onPress=function() restart() end},
+    {x=-2.25,y=1,cat='sys', act='back',     onPress=function() end},
 
-    {x=-1,   y=-3,cat='game',act='rotateCCW',onPress=function() mino.rotation=(mino.rotation-1)%4 end},
-    {x=0,    y=-3,cat='game',act='rotate180',onPress=function() mino.rotation=(mino.rotation+2)%4 end},
-    {x=1,    y=-3,cat='game',act='rotateCW', onPress=function() mino.rotation=(mino.rotation+1)%4 end},
+    {x=-1,   y=0,cat='game',act='rotateCCW',onPress=function() mino.rotation=(mino.rotation-1)%4 end},
+    {x=0,    y=0,cat='game',act='rotate180',onPress=function() mino.rotation=(mino.rotation+2)%4 end},
+    {x=1,    y=0,cat='game',act='rotateCW', onPress=function() mino.rotation=(mino.rotation+1)%4 end},
     {
         x=-1,
-        y=-2,
+        y=1,
         cat='game',
         act='moveLeft',
         onPress=function()
@@ -61,7 +61,7 @@ local buttons={
     },
     {
         x=0,
-        y=-2,
+        y=1,
         cat='game',
         act='holdPiece',
         onPress=function()
@@ -71,7 +71,7 @@ local buttons={
     },
     {
         x=1,
-        y=-2,
+        y=1,
         cat='game',
         act='moveRight',
         onPress=function()
@@ -80,10 +80,10 @@ local buttons={
             mino.dir=1
         end,
     },
-    -- {x=-1,y=-1,cat='game',act='func1',   onPress=function() end},
-    -- {x=0, y=-1,cat='game',act='func2',   onPress=function() end},
-    {x=0,y=-1,cat='game',act='softDrop',onPress=function() mino.softDropTime=love.timer.getTime() end},
-    {x=1,y=-1,cat='game',act='hardDrop',onPress=function() end},
+    -- {x=-1,y=2,cat='game',act='func1',   onPress=function() end},
+    -- {x=0, y=2,cat='game',act='func2',   onPress=function() end},
+    {x=0, y=2,cat='game',act='softDrop',onPress=function() mino.softDropTime=love.timer.getTime() end},
+    {x=1, y=2,cat='game',act='hardDrop',onPress=function() end},
 }
 local a=180
 for i=1,#buttons do
@@ -174,7 +174,7 @@ function scene.draw()
     GC.origin()
     GC.setColor(0,0,0,.42)
     GC.rectangle('fill',0,0,SCR.w,SCR.h)
-    GC.replaceTransform(SCR.xOy_d)
+    GC.replaceTransform(SCR.xOy_m)
     GC.setLineWidth(4)
     FONT.set(35)
     for i=1,#buttons do
@@ -195,8 +195,7 @@ function scene.draw()
     end
 
     -- Demo
-    GC.replaceTransform(SCR.xOy_u)
-    GC.translate(0,20)
+    GC.translate(0,-460)
     local w=40
     -- Board
     GC.setColor(COLOR.D)
@@ -228,7 +227,7 @@ for i=1,#buttons do
     local b=buttons[i]
     table.insert(scene.widgetList,WIDGET.new{
         type='hint',
-        pos={.5,1},
+        pos={.5,.5},
         x=b.x,y=b.y,w=a-20,h=a-20,
         text="",frameColor='X',
         floatText=LANG('keysetHint_'..b.cat..'_'..b.act),
