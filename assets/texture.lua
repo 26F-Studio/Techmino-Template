@@ -1,12 +1,5 @@
 local TEX={}
 
-TEX.transition=GC.initCanvas(128, 1, function()
-    for x=0,127 do
-        GC.setColor(1, 1, 1, 1-x/128)
-        GC.rectangle('fill', x, 0, 1, 1)
-    end
-end)
-
 -- Control icons
 TEX.actionIcons={
     texture=GC.initCanvas(720,540,function()
