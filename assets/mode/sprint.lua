@@ -13,8 +13,8 @@ return {
             playerInit=function(P)
                 P.modeData.target.line=40
             end,
-            afterClear=mechLib.brik.misc.lineClear_event_afterClear,
-            drawOnPlayer=mechLib.brik.misc.lineClear_event_drawOnPlayer,
+            afterClear=GAME.mechLib.brik.misc.lineClear_event_afterClear,
+            drawOnPlayer=GAME.mechLib.brik.misc.lineClear_event_drawOnPlayer,
         },
     }},
 }

@@ -21,8 +21,8 @@ SCR.setSize(1600,1000)
 BGM.setMaxSources(6)
 BGM.load{}
 SFX.load{}
-FONT.load('norm','assets/RHDisplayGalaxy-Medium.otf')
-FONT.setDefaultFont('norm')
+GC.loadFont('norm','assets/RHDisplayGalaxy-Medium.otf')
+GC.setDefaultFont('norm')
 
 Text=nil ---@type Techmino.I18N
 LANG.add{
@@ -55,7 +55,6 @@ KEYMAP=require'assets.keymap'
 CONF=require'assets.config'
 require'assets.gamefunc'
 GAME=require'ZTC'
-SKIN=require'assets.skin'
 
 ---@type Map<Techmino.keymapAction[]>
 KM={}
@@ -147,7 +146,7 @@ for _,v in next,love.filesystem.getDirectoryItems('assets/scene') do
     end
 end
 
-SKIN.add('brik_template',FILE.load('assets/skin/template.lua','-lua'))
+GAME.addSkin('brik_template','assets/skin/template.lua')
 GAME.addMode('test','assets/mode/test.lua')
 GAME.addMode('sprint','assets/mode/sprint.lua')
 GAME.addMode('death','assets/mode/death.lua')

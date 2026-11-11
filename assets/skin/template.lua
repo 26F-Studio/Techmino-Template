@@ -9,8 +9,6 @@ local gc_rectBeam=GC.rectBeam
 
 local max,min=math.max,math.min
 
-local COLOR=COLOR
-
 ---@type Techmino.Skin
 local S={}
 
@@ -74,19 +72,19 @@ function S.drawFloatHoldCell(C,disabled,_,_,_)
         gc_setColor(.6,.6,.6,.25)
     else
         local r,g,b=unpack(RGB9[C.color])
-        gc_setColor(r,g,b,S.getTime()%150/200)
+        gc_setColor(r,g,b,(S.time or 0)%150/200)
     end
     gc_rectangle('fill',0,0,40,40)
 end
 
 function S.drawFloatHoldMark(n,disabled)
-    gc_setColor(disabled and COLOR.DL or COLOR.L)
-    FONT.set(50)
+    gc_setColor(disabled and CLR.l5 or CLR.l9)
+    GC.setFont(50)
     GC.mStr(n,0,5)
 end
 
 function S.drawHeightLines(fieldW,maxSpawnH,spawnH,lockoutH,deathH,voidH)
-    -- gc_setColor(.0,.4,1.,S.getTime()%600<300 and .3 or .5) gc_rectangle('fill',0,-maxSpawnH-1 ,fieldW,2)
+    -- gc_setColor(.0,.4,1.,(S.time or 0)%600<300 and .3 or .5) gc_rectangle('fill',0,-maxSpawnH-1 ,fieldW,2)
     -- gc_setColor(.0,.4,1.,.8) gc_rectangle('fill',0,-spawnH   -1 ,fieldW,2)
     -- gc_setColor(1.,.5,.0,.6) gc_rectangle('fill',0,-lockoutH -1 ,fieldW,2)
     -- gc_setColor(1.,.0,.0,.6) gc_rectangle('fill',0,-deathH   -1 ,fieldW,2)
@@ -114,13 +112,13 @@ function S.drawGarbageBuffer(garbageBuffer)
     --         h=800-y
     --     end
     --     if g._time<g.time then
-    --         gc_setColor(COLOR.R)
+    --         gc_setColor(CLR.R)
     --         gc_rectangle('fill',210,400-y-h+3,10,h-6)
-    --         gc_setColor(COLOR.L)
+    --         gc_setColor(CLR.l9)
     --         local progress=g._time/g.time
     --         gc_rectangle('fill',210,400-y-h+3+(h-6)*(1-progress),10,(h-6)*progress)
     --     else
-    --         gc_setColor(S.getTime()%100<50 and COLOR.R or COLOR.L)
+    --         gc_setColor((S.time or 0)%100<50 and CLR.R or CLR.l9)
     --         gc_rectangle('fill',210,400-y-h+3,10,h-6)
     --     end
     --     y=y+h
@@ -130,24 +128,24 @@ end
 
 function S.drawLockDelayIndicator(freshCondition,freshChance,timeRem)
     -- if timeRem>0 then
-    --     gc_setColor(COLOR.HSV(timeRem/2.6,.4,.9,.62))
+    --     gc_setColor(CLR.HSV(timeRem/2.6,.4,.9,.62))
     --     gc_rectangle('fill',-200,415,400*timeRem,14)
     -- end
     -- if freshChance>0 then
     --     freshChance=min(freshChance,15)
     --     gc_setColor(
-    --         freshCondition=='any' and COLOR.dL or
-    --         freshCondition=='fall' and COLOR.R or
-    --         freshCondition=='none' and COLOR.D or
-    --         COLOR.rainbow(4)
+    --         freshCondition=='any' and CLR.l7 or
+    --         freshCondition=='fall' and CLR.R or
+    --         freshCondition=='none' and CLR.d8 or
+    --         CLR.rainbow(4)
     --     )
     --     stc_reset()
     --     stc_rect(-200,415,400*timeRem,14)
     --     for i=1,freshChance do gc_rectangle('fill',-218+26*i-1,420-1,20+2,5+2) end
-    --     gc_setColor(COLOR.HSV(freshChance/(14*2.6),.4,.9))
+    --     gc_setColor(CLR.HSV(freshChance/(14*2.6),.4,.9))
     --     for i=1,freshChance do gc_rectangle('fill',-218+26*i,420,20,5) end
     --     stc_stop()
-    --     gc_setColor(COLOR.HSV(freshChance/(14*2.6),.4,.9,.62))
+    --     gc_setColor(CLR.HSV(freshChance/(14*2.6),.4,.9,.62))
     --     for i=1,freshChance do gc_rectangle('fill',-218+26*i,420,20,5) end
     -- end
 end
@@ -173,7 +171,7 @@ function S.drawNextBorder(slot)
     gc_setColor(colors.nextBG)
     gc_rectangle('fill',30,0,140,100*slot)
     gc_setLineWidth(2)
-    gc_setColor(COLOR.L)
+    gc_setColor(CLR.l9)
     gc_rectangle('line',30,0,140,100*slot)
 end
 
@@ -188,12 +186,12 @@ function S.drawHoldBorder(mode,slot)
     if mode=='hold' then
         gc_setColor(colors.holdBG)
         gc_rectangle('fill',-170,0,140,100*slot)
-        gc_setColor(COLOR.L)
+        gc_setColor(CLR.l9)
         gc_rectangle('line',-170,0,140,100*slot)
     elseif mode=='swap' then
         gc_setColor(colors.holdBG)
         gc_rectangle('fill',430,0,140,100*slot)
-        gc_setColor(COLOR.L)
+        gc_setColor(CLR.l9)
         gc_rectangle('line',430,0,140,100*slot)
     end
 end
@@ -204,23 +202,23 @@ function S.drawHoldCell(C,disabled,_,_,_)
 end
 
 function S.drawTime(time)
-    gc_setColor(COLOR.dL)
-    FONT.set(30,'number')
+    gc_setColor(CLR.l7)
+    GC.setFont(30)
     gc_printf(("%.1f"):format(time/1000),-220-260,370,260,'right')
 end
 
 function S.drawInfoPanel(x,y,w,h)
     gc_setColor(colors.infoBG)
     gc_rectangle('fill',x,y,w,h)
-    gc_setColor(COLOR.dL)
+    gc_setColor(CLR.l7)
     gc_rectangle('line',x,y,w,h)
 end
 
 function S.drawStartingCounter(readyDelay)
     gc_push('transform')
-    local num=math.ceil((readyDelay-S.getTime())/1000)
+    local num=math.ceil((readyDelay-(S.time or 0))/1000)
     local r,g,b
-    local d=(readyDelay-S.getTime())%1000/1000 -- from .999 to 0
+    local d=(readyDelay-(S.time or 0))%1000/1000 -- from .999 to 0
 
     if     num==1 then r,g,b=1.00,0.70,0.70 if d>.75 then gc_scale(1,1+(d/.25-3)^2) end
     elseif num==2 then r,g,b=0.98,0.85,0.75 if d>.75 then gc_scale(1+(d/.25-3)^2,1) end
@@ -230,7 +228,7 @@ function S.drawStartingCounter(readyDelay)
     else   r,g,b=max(1.26-num/10,0),max(1.26-num/10,0),max(1.26-num/10,0)
     end
 
-    FONT.set(100)
+    GC.setFont(100)
 
     -- Warping number
     gc_push('transform')

@@ -10,7 +10,7 @@ return {
         infHold=true,
         readyDelay=1000,
         event={
-            afterLock=mechLib.brik.misc.invincible_event_afterLock,
+            afterLock=GAME.mechLib.brik.misc.invincible_event_afterLock,
         },
     }},
 }

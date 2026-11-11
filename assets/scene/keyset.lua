@@ -176,7 +176,7 @@ function scene.draw()
     GC.rectangle('fill',0,0,SCR.w,SCR.h)
     GC.replaceTransform(SCR.xOy_m)
     GC.setLineWidth(4)
-    FONT.set(35)
+    GC.setFont(35)
     for i=1,#buttons do
         local b=buttons[i]
         if b.active then
@@ -187,7 +187,7 @@ function scene.draw()
         GC.mRect('line',b.x,b.y,160,160)
         GC.setColor(1,1,1,.26)
         GC.mDrawQ(TEX.actionIcons.texture,TEX.actionIcons.quads[b.act],b.x,b.y,nil,.8)
-        GC.setColor(COLOR.DL)
+        GC.setColor(CLR.l5)
         local keys=KM[b.cat]:getKeys(b.act)
         for j=1,#keys do
             GC.mStr(keys[j],b.x,b.y-40+30*j-#keys*15)
@@ -198,13 +198,13 @@ function scene.draw()
     GC.translate(0,-460)
     local w=40
     -- Board
-    GC.setColor(COLOR.D)
+    GC.setColor(CLR.d8)
     GC.rectangle('fill',-5*w-6,0,10*w+12,8*w+26)
-    GC.setColor(COLOR.LD)
+    GC.setColor(CLR.l0)
     GC.rectangle('fill',-5*w,0,10*w,8*w+20)
     -- Grid line
     GC.setLineWidth(2)
-    GC.setColor(COLOR.DL)
+    GC.setColor(CLR.l5)
     for x=-4,4 do GC.line(x*w,8*w+20,x*w,0) end
     for y=1,8 do
         local h=(8-y)*w+20
@@ -214,8 +214,8 @@ function scene.draw()
     GC.setColor(RGB9[mino.color])
     GC.translate(mino.x*w,20+(buttons.hardDrop.active and 7 or buttons.softDrop.active and math.floor((love.timer.getTime()-mino.softDropTime)%.25*4*6+1) or 1)*w)
     GC.rectangle('fill',-w,-w,2*w,2*w)
-    FONT.set(30)
-    GC.strokePrint('full',3,COLOR.D,COLOR.L,rotText[mino.rotation],0,0,2*w,'center',0,2,2,w/2,20)
+    GC.setFont(30)
+    GC.strokePrint('full',3,CLR.d8,CLR.l9,rotText[mino.rotation],0,0,2*w,'center',0,2,2,w/2,20)
 end
 
 scene.widgetList={
@@ -229,7 +229,7 @@ for i=1,#buttons do
         type='hint',
         pos={.5,.5},
         x=b.x,y=b.y,w=a-20,h=a-20,
-        text="",frameColor='X',
+        text="",frameColor={0,0,0,0},
         floatText=LANG('keysetHint_'..b.cat..'_'..b.act),
         labelPos='top',
         onPress=function() SCN.go('keyset_press','none',buttons[i].cat,buttons[i].act) end,

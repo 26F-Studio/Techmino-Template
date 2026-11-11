@@ -18,7 +18,7 @@ return {
                 P.settings.dropDelay=0
                 P.settings.lockDelay=1e99
                 P.settings.spawnDelay=260
-                mechLib.brik.marathon.hypersonic_high_event_playerInit(P)
+                GAME.mechLib.brik.marathon.hypersonic_high_event_playerInit(P)
             end,
         },
     }},
